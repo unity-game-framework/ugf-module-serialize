@@ -4,14 +4,14 @@ UGF.Module.Serialize
 
 ## Info
 
-- **Version**: `0.1.0-preview`
+- **Version**: `0.2.0-preview`
 - **Unity Version**: `2019.3.0`
 - **Api Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
-- [UGF.Module](https://github.com/unity-game-framework/ugf-module): `0.1.0-preview`
-- [UGF.Serialize](https://github.com/unity-game-framework/ugf-serialize): `1.0.0-preview.2`
+- [UGF.Module](https://github.com/unity-game-framework/ugf-module): `0.2.0-preview`
+- [UGF.Serialize](https://github.com/unity-game-framework/ugf-serialize): `1.1.0-preview`
 
 ### Changelog
 
