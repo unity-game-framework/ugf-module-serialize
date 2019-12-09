@@ -16,11 +16,26 @@ namespace UGF.Module.Serialize.Runtime
         public SerializeModule(ISerializeModuleDescription description)
         {
             Description = description ?? throw new ArgumentNullException(nameof(description));
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
 
             m_provider.Add(SerializerFormatterUtility.SerializerBinaryName, SerializerFormatterUtility.SerializerBinary);
             m_provider.Add(SerializerUnityJsonUtility.SerializerTextCompactName, SerializerUnityJsonUtility.SerializerTextCompact);
             m_provider.Add(SerializerUnityJsonUtility.SerializerTextReadableName, SerializerUnityJsonUtility.SerializerTextReadable);
             m_provider.Add(SerializerUnityJsonUtility.SerializerBytesName, SerializerUnityJsonUtility.SerializerBytes);
+        }
+
+        protected override void OnUninitialize()
+        {
+            base.OnUninitialize();
+
+            m_provider.Remove<byte>(SerializerFormatterUtility.SerializerBinaryName);
+            m_provider.Remove<string>(SerializerUnityJsonUtility.SerializerTextCompactName);
+            m_provider.Remove<string>(SerializerUnityJsonUtility.SerializerTextReadableName);
+            m_provider.Remove<byte>(SerializerUnityJsonUtility.SerializerBytesName);
         }
 
         public ISerializer<byte[]> GetDefaultBytesSerializer()

@@ -1,8 +1,6 @@
-using UGF.Description.Runtime;
-
 namespace UGF.Module.Serialize.Runtime
 {
-    public interface ISerializeModuleDescription : IDescription
+    public interface ISerializeModuleDescription
     {
         string DefaultBytesSerializerName { get; }
         string DefaultTextSerializerName { get; }
