@@ -1,51 +1,74 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
+using UGF.Logs.Runtime;
 using UGF.Serialize.Runtime;
-using UGF.Serialize.Runtime.Formatter;
-using UGF.Serialize.Runtime.Unity;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public class SerializeModule : ApplicationModuleBase, ISerializeModule
+    public class SerializeModule : ApplicationModuleDescribed<ISerializeModuleDescription>, ISerializeModule
     {
-        public ISerializeModuleDescription Description { get; }
-        public ISerializerProvider Provider { get { return m_provider; } }
+        public ISerializerProvider Provider { get; }
 
-        private readonly SerializerProvider m_provider = new SerializerProvider();
-
-        public SerializeModule(ISerializeModuleDescription description)
+        public SerializeModule(IApplication application, ISerializeModuleDescription description, ISerializerProvider provider = null) : base(application, description)
         {
-            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Provider = provider ?? new SerializerProvider();
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            m_provider.Add(SerializerFormatterUtility.SerializerBinaryName, SerializerFormatterUtility.SerializerBinary);
-            m_provider.Add(SerializerUnityJsonUtility.SerializerTextCompactName, SerializerUnityJsonUtility.SerializerTextCompact);
-            m_provider.Add(SerializerUnityJsonUtility.SerializerTextReadableName, SerializerUnityJsonUtility.SerializerTextReadable);
-            m_provider.Add(SerializerUnityJsonUtility.SerializerBytesName, SerializerUnityJsonUtility.SerializerBytes);
+            foreach (KeyValuePair<string, ISerializerBuilder> pair in Description.Serializers)
+            {
+                ISerializerBuilder builder = pair.Value;
+                ISerializer serializer = builder.Build();
+
+                Provider.Add(builder.Name, serializer);
+            }
+
+            Log.Debug("Serialize Module initialized", new
+            {
+                types = Provider.DataTypesCount,
+                serializers = Description.Serializers.Count,
+                defaultBytes = GetSerializerBuilder(Description.DefaultBytesSerializeId).Name,
+                defaultText = GetSerializerBuilder(Description.DefaultTextSerializerId).Name
+            });
         }
 
         protected override void OnUninitialize()
         {
             base.OnUninitialize();
 
-            m_provider.Remove<byte>(SerializerFormatterUtility.SerializerBinaryName);
-            m_provider.Remove<string>(SerializerUnityJsonUtility.SerializerTextCompactName);
-            m_provider.Remove<string>(SerializerUnityJsonUtility.SerializerTextReadableName);
-            m_provider.Remove<byte>(SerializerUnityJsonUtility.SerializerBytesName);
+            Provider.Clear();
         }
 
         public ISerializer<byte[]> GetDefaultBytesSerializer()
         {
-            return m_provider.Get<byte[]>(Description.DefaultBytesSerializerName);
+            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultBytesSerializeId);
+            ISerializer<byte[]> serializer = Provider.Get<byte[]>(builder.Name);
+
+            return serializer;
         }
 
         public ISerializer<string> GetDefaultTextSerializer()
         {
-            return m_provider.Get<string>(Description.DefaultTextSerializerName);
+            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultTextSerializerId);
+            ISerializer<string> serializer = Provider.Get<string>(builder.Name);
+
+            return serializer;
+        }
+
+        public ISerializerBuilder GetSerializerBuilder(string id)
+        {
+            return TryGetSerializerBuilder(id, out ISerializerBuilder builder) ? builder : throw new ArgumentException($"Serializer builder not found by the specified id: '{id}'.");
+        }
+
+        public bool TryGetSerializerBuilder(string id, out ISerializerBuilder builder)
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+
+            return Description.Serializers.TryGetValue(id, out builder);
         }
     }
 }

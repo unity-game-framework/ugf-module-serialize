@@ -1,0 +1,22 @@
+{
+    "name": "UGF.Module.Serialize.Runtime.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1b64e8c1b5d6a0544b302c8a8d107ca9",
+        "GUID:a4312e46e9f64bb4aa011ac96ffd2a61",
+        "GUID:d067af32d09350a4bb33960432735e4d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
