@@ -10,5 +10,9 @@ namespace UGF.Module.Serialize.Runtime
 
         ISerializer<byte[]> GetDefaultBytesSerializer();
         ISerializer<string> GetDefaultTextSerializer();
+        ISerializerBuilder GetSerializerBuilder(string id);
+        bool TryGetSerializerBuilder(string id, out ISerializerBuilder builder);
+        string GetSerializerName(string id);
+        bool TryGetSerializerName(string id, out string name);
     }
 }
