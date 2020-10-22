@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+using UGF.Application.Runtime;
 using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public interface ISerializeModuleDescription
+    public interface ISerializeModuleDescription : IApplicationModuleDescription
     {
         string DefaultBytesSerializeId { get; }
         string DefaultTextSerializerId { get; }
-        IReadOnlyList<AssetReference<SerializerAsset>> Serializers { get; }
+        IReadOnlyDictionary<string, ISerializerBuilder> Serializers { get; }
     }
 }

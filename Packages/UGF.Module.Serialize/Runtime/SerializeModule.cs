@@ -1,37 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public class SerializeModule : ApplicationModuleBase, ISerializeModule
+    public class SerializeModule : ApplicationModuleDescribed<ISerializeModuleDescription>, ISerializeModule
     {
-        public ISerializeModuleDescription Description { get; }
         public ISerializerProvider Provider { get; }
 
-        public SerializeModule(ISerializeModuleDescription description, ISerializerProvider provider = null)
+        public SerializeModule(IApplication application, ISerializeModuleDescription description, ISerializerProvider provider = null) : base(application, description)
         {
-            Description = description ?? throw new ArgumentNullException(nameof(description));
             Provider = provider ?? new SerializerProvider();
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
+
+            foreach (KeyValuePair<string, ISerializerBuilder> pair in Description.Serializers)
+            {
+                ISerializerBuilder builder = pair.Value;
+                ISerializer serializer = builder.Build();
+
+                Provider.Add(builder.Name, serializer);
+            }
         }
 
         protected override void OnUninitialize()
         {
             base.OnUninitialize();
+
+            Provider.Clear();
         }
 
         public ISerializer<byte[]> GetDefaultBytesSerializer()
         {
+            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultBytesSerializeId);
+            ISerializer<byte[]> serializer = Provider.Get<byte[]>(builder.Name);
+
+            return serializer;
         }
 
         public ISerializer<string> GetDefaultTextSerializer()
         {
+            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultTextSerializerId);
+            ISerializer<string> serializer = Provider.Get<string>(builder.Name);
+
+            return serializer;
         }
 
         public ISerializerBuilder GetSerializerBuilder(string id)
@@ -41,31 +57,9 @@ namespace UGF.Module.Serialize.Runtime
 
         public bool TryGetSerializerBuilder(string id, out ISerializerBuilder builder)
         {
-        }
-
-        public string GetSerializerName(string id)
-        {
-            return TryGetSerializerName(id, out string name) ? name : throw new ArgumentException($"Serializer name not found by the specified id: '{id}'.");
-        }
-
-        public bool TryGetSerializerName(string id, out string name)
-        {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
-            for (int i = 0; i < Description.Serializers.Count; i++)
-            {
-                AssetReference<SerializerAsset> reference = Description.Serializers[i];
-
-                if (reference.Guid == id)
-                {
-                    name = reference.Asset.Name;
-
-                    return true;
-                }
-            }
-
-            name = default;
-            return false;
+            return Description.Serializers.TryGetValue(id, out builder);
         }
     }
 }
