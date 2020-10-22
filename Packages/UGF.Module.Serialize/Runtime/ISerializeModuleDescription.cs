@@ -1,10 +1,13 @@
+using System.Collections.Generic;
+using UGF.Application.Runtime;
+using UGF.Serialize.Runtime;
+
 namespace UGF.Module.Serialize.Runtime
 {
-    public interface ISerializeModuleDescription
+    public interface ISerializeModuleDescription : IApplicationModuleDescription
     {
-        string DefaultBytesSerializerName { get; }
-        string DefaultTextSerializerName { get; }
-        string DefaultTextCompactSerializerName { get; }
-        string DefaultTextReadableSerializerName { get; }
+        string DefaultBytesSerializeId { get; }
+        string DefaultTextSerializerId { get; }
+        IReadOnlyDictionary<string, ISerializerBuilder> Serializers { get; }
     }
 }

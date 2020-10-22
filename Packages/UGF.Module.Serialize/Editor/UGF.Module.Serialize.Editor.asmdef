@@ -1,0 +1,20 @@
+{
+    "name": "UGF.Module.Serialize.Editor",
+    "rootNamespace": "UGF.Module.Serialize.Editor",
+    "references": [
+        "GUID:1b64e8c1b5d6a0544b302c8a8d107ca9",
+        "GUID:abdd615e45137c74ca2ce9c636c78c15",
+        "GUID:0a8cfea8c226a8041bc7a5979811d462"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

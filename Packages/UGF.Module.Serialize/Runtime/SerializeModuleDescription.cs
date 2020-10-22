@@ -1,13 +1,14 @@
-using UGF.Serialize.Runtime.Formatter;
-using UGF.Serialize.Runtime.Unity;
+﻿using System.Collections.Generic;
+using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
     public class SerializeModuleDescription : ISerializeModuleDescription
     {
-        public string DefaultBytesSerializerName { get; set; } = SerializerFormatterUtility.SerializerBinaryName;
-        public string DefaultTextSerializerName { get; set; } = SerializerUnityJsonUtility.SerializerTextCompactName;
-        public string DefaultTextCompactSerializerName { get; set; } = SerializerUnityJsonUtility.SerializerTextCompactName;
-        public string DefaultTextReadableSerializerName { get; set; } = SerializerUnityJsonUtility.SerializerTextReadableName;
+        public string DefaultBytesSerializeId { get; set; }
+        public string DefaultTextSerializerId { get; set; }
+        public Dictionary<string, ISerializerBuilder> Serializers { get; } = new Dictionary<string, ISerializerBuilder>();
+
+        IReadOnlyDictionary<string, ISerializerBuilder> ISerializeModuleDescription.Serializers { get { return Serializers; } }
     }
 }
