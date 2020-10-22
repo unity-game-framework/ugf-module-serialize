@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.Application.Runtime;
+using UGF.Logs.Runtime;
 using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
@@ -25,6 +26,14 @@ namespace UGF.Module.Serialize.Runtime
 
                 Provider.Add(builder.Name, serializer);
             }
+
+            Log.Debug("Serialize Module initialized", new
+            {
+                types = Provider.DataTypesCount,
+                serializers = Description.Serializers.Count,
+                defaultBytes = GetSerializerBuilder(Description.DefaultBytesSerializeId).Name,
+                defaultText = GetSerializerBuilder(Description.DefaultTextSerializerId).Name
+            });
         }
 
         protected override void OnUninitialize()
