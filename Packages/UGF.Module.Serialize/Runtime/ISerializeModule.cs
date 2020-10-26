@@ -5,6 +5,7 @@ namespace UGF.Module.Serialize.Runtime
 {
     public interface ISerializeModule : IApplicationModuleDescribed
     {
+        new ISerializeModuleDescription Description { get; }
         ISerializerProvider Provider { get; }
 
         ISerializer<byte[]> GetDefaultBytesSerializer();
