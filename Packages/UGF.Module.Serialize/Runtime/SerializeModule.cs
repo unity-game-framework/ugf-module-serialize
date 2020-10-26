@@ -6,11 +6,13 @@ using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public class SerializeModule : ApplicationModuleDescribed<ISerializeModuleDescription>, ISerializeModule
+    public class SerializeModule : ApplicationModuleDescribed<SerializeModuleDescription>, ISerializeModule
     {
         public ISerializerProvider Provider { get; }
 
-        public SerializeModule(IApplication application, ISerializeModuleDescription description, ISerializerProvider provider = null) : base(application, description)
+        ISerializeModuleDescription ISerializeModule.Description { get { return Description; } }
+
+        public SerializeModule(IApplication application, SerializeModuleDescription description, ISerializerProvider provider = null) : base(application, description)
         {
             Provider = provider ?? new SerializerProvider();
         }
