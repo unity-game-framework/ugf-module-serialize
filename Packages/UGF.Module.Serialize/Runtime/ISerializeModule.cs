@@ -3,7 +3,7 @@ using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public interface ISerializeModule : IApplicationModuleDescribed
+    public interface ISerializeModule : IApplicationModule
     {
         new ISerializeModuleDescription Description { get; }
         ISerializerProvider Provider { get; }
