@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    [CreateAssetMenu(menuName = "UGF/Serialize/Serialize Module", order = 2000)]
+    [CreateAssetMenu(menuName = "Unity Game Framework/Serialize/Serialize Module", order = 2000)]
     public class SerializeModuleAsset : ApplicationModuleAsset<ISerializeModule, SerializeModuleDescription>
     {
         [AssetGuid(typeof(SerializerAsset))]
