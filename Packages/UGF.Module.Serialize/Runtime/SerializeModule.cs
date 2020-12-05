@@ -6,15 +6,19 @@ using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    public class SerializeModule : ApplicationModuleDescribed<SerializeModuleDescription>, ISerializeModule
+    public class SerializeModule : ApplicationModule<SerializeModuleDescription>, ISerializeModule
     {
         public ISerializerProvider Provider { get; }
 
         ISerializeModuleDescription ISerializeModule.Description { get { return Description; } }
 
-        public SerializeModule(IApplication application, SerializeModuleDescription description, ISerializerProvider provider = null) : base(application, description)
+        public SerializeModule(SerializeModuleDescription description, IApplication application) : this(description, application, new SerializerProvider())
         {
-            Provider = provider ?? new SerializerProvider();
+        }
+
+        public SerializeModule(SerializeModuleDescription description, IApplication application, ISerializerProvider provider) : base(description, application)
+        {
+            Provider = provider ?? throw new ArgumentNullException(nameof(provider));
         }
 
         protected override void OnInitialize()

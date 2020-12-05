@@ -8,8 +8,8 @@ using UnityEngine;
 
 namespace UGF.Module.Serialize.Runtime
 {
-    [CreateAssetMenu(menuName = "UGF/Serialize/Serialize Module", order = 2000)]
-    public class SerializeModuleAsset : ApplicationModuleDescribedAsset<ISerializeModule, SerializeModuleDescription>
+    [CreateAssetMenu(menuName = "Unity Game Framework/Serialize/Serialize Module", order = 2000)]
+    public class SerializeModuleAsset : ApplicationModuleAsset<ISerializeModule, SerializeModuleDescription>
     {
         [AssetGuid(typeof(SerializerAsset))]
         [SerializeField] private string m_defaultBytes;
@@ -21,9 +21,9 @@ namespace UGF.Module.Serialize.Runtime
         public string DefaultText { get { return m_defaultText; } set { m_defaultText = value; } }
         public List<AssetReference<SerializerAsset>> Serializers { get { return m_serializers; } }
 
-        protected override SerializeModuleDescription OnGetDescription(IApplication application)
+        protected override IApplicationModuleDescription OnBuildDescription()
         {
-            var description = new SerializeModuleDescription
+            var description = new SerializeModuleDescription(typeof(ISerializeModule))
             {
                 DefaultBytesSerializeId = m_defaultBytes,
                 DefaultTextSerializerId = m_defaultText
@@ -42,9 +42,9 @@ namespace UGF.Module.Serialize.Runtime
             return description;
         }
 
-        protected override ISerializeModule OnBuild(IApplication application, SerializeModuleDescription description)
+        protected override ISerializeModule OnBuild(SerializeModuleDescription description, IApplication application)
         {
-            return new SerializeModule(application, description);
+            return new SerializeModule(description, application);
         }
     }
 }
