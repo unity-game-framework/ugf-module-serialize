@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "com.ugf.application": "5.1.0",
-    "com.ugf.serialize": "1.2.0",
-    "com.ugf.logs": "4.0.0"
+    "com.ugf.serialize": "2.0.0",
+    "com.ugf.logs": "4.1.0"
   }
 }
