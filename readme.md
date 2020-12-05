@@ -4,15 +4,15 @@ UGF.Module.Serialize
 
 ## Info
 
-- **Version**: `1.1.0`
+- **Version**: `2.0.0`
 - **Unity**: `2020.2`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
-- `com.ugf.application`: `5.1.0`
-- `com.ugf.serialize`: `1.2.0`
-- `com.ugf.logs`: `3.0.0`
+- `com.ugf.application`: `6.0.0`
+- `com.ugf.serialize`: `2.0.0`
+- `com.ugf.logs`: `4.1.0`
 
 
 ### Description

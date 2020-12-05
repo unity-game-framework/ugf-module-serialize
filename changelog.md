@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/2.0.0) - 2020-12-05  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-serialize/milestone/6?closed=1)  
+    
+
+### Changed
+
+- Update to support latest application package ([#23](https://github.com/unity-game-framework/ugf-module-serialize/pull/23))  
+    - Update to use `UGF.Builder` and `UGF.Description` packages from the latest version of `UGF.Application` package.
+    - Change dependencies: `com.ugf.application` to `6.0.0`, `com.ugf.serialize` to `2.0.0`, `com.ugf.logs` to `4.1.0`.
+    - Change name of the root of create assets menu, from `UGF` to `Unity Game Framework`.
+
 ## [1.1.0](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/1.1.0) - 2020-10-26  
 
 ### Release Notes
