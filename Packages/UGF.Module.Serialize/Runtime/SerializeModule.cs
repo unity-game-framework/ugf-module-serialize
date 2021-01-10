@@ -27,18 +27,17 @@ namespace UGF.Module.Serialize.Runtime
 
             foreach (KeyValuePair<string, ISerializerBuilder> pair in Description.Serializers)
             {
-                ISerializerBuilder builder = pair.Value;
-                ISerializer serializer = builder.Build();
+                ISerializer serializer = pair.Value.Build();
 
-                Provider.Add(builder.Name, serializer);
+                Provider.Add(pair.Key, serializer);
             }
 
             Log.Debug("Serialize Module initialized", new
             {
                 types = Provider.DataTypesCount,
                 serializers = Description.Serializers.Count,
-                defaultBytes = GetSerializerBuilder(Description.DefaultBytesSerializeId).Name,
-                defaultText = GetSerializerBuilder(Description.DefaultTextSerializerId).Name
+                defaultBytes = Description.DefaultBytesSerializeId,
+                defaultText = Description.DefaultTextSerializerId
             });
         }
 
@@ -51,16 +50,14 @@ namespace UGF.Module.Serialize.Runtime
 
         public ISerializer<byte[]> GetDefaultBytesSerializer()
         {
-            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultBytesSerializeId);
-            ISerializer<byte[]> serializer = Provider.Get<byte[]>(builder.Name);
+            ISerializer<byte[]> serializer = Provider.Get<byte[]>(Description.DefaultBytesSerializeId);
 
             return serializer;
         }
 
         public ISerializer<string> GetDefaultTextSerializer()
         {
-            ISerializerBuilder builder = GetSerializerBuilder(Description.DefaultTextSerializerId);
-            ISerializer<string> serializer = Provider.Get<string>(builder.Name);
+            ISerializer<string> serializer = Provider.Get<string>(Description.DefaultTextSerializerId);
 
             return serializer;
         }

@@ -12,9 +12,5 @@ namespace UGF.Module.Serialize.Runtime
         public Dictionary<string, ISerializerBuilder> Serializers { get; } = new Dictionary<string, ISerializerBuilder>();
 
         IReadOnlyDictionary<string, ISerializerBuilder> ISerializeModuleDescription.Serializers { get { return Serializers; } }
-
-        public SerializeModuleDescription(Type registerType) : base(registerType)
-        {
-        }
     }
 }

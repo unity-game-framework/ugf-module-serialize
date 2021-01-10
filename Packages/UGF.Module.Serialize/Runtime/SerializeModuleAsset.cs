@@ -23,8 +23,9 @@ namespace UGF.Module.Serialize.Runtime
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
-            var description = new SerializeModuleDescription(typeof(ISerializeModule))
+            var description = new SerializeModuleDescription
             {
+                RegisterType = typeof(ISerializeModule),
                 DefaultBytesSerializeId = m_defaultBytes,
                 DefaultTextSerializerId = m_defaultText
             };
@@ -32,9 +33,6 @@ namespace UGF.Module.Serialize.Runtime
             for (int i = 0; i < m_serializers.Count; i++)
             {
                 AssetReference<SerializerAsset> reference = m_serializers[i];
-
-                if (string.IsNullOrEmpty(reference.Guid)) throw new ArgumentException("Serializer asset id not specified.");
-                if (reference.Asset == null) throw new ArgumentException($"Serializer asset not specified: '{reference.Guid}'.");
 
                 description.Serializers.Add(reference.Guid, reference.Asset);
             }
