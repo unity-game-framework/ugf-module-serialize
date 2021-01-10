@@ -1,7 +1,7 @@
 {
   "name": "com.ugf.module.serialize",
   "displayName": "UGF.Module.Serialize",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "unity": "2020.2",
   "apiCompatibility": ".NET Standard 2.0",
   "description": "Module to manage multiple serializers in an application.",
