@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.Logs.Runtime;
+using UGF.RuntimeTools.Runtime.Providers;
 using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
     public class SerializeModule : ApplicationModule<SerializeModuleDescription>, ISerializeModule
     {
-        public ISerializerProvider Provider { get; }
+        public IProvider<string, ISerializer> Provider { get; }
 
         ISerializeModuleDescription ISerializeModule.Description { get { return Description; } }
 
-        public SerializeModule(SerializeModuleDescription description, IApplication application) : this(description, application, new SerializerProvider())
+        public SerializeModule(SerializeModuleDescription description, IApplication application) : this(description, application, new Provider<string, ISerializer>())
         {
         }
 
-        public SerializeModule(SerializeModuleDescription description, IApplication application, ISerializerProvider provider) : base(description, application)
+        public SerializeModule(SerializeModuleDescription description, IApplication application, IProvider<string, ISerializer> provider) : base(description, application)
         {
             Provider = provider ?? throw new ArgumentNullException(nameof(provider));
         }
@@ -34,7 +35,6 @@ namespace UGF.Module.Serialize.Runtime
 
             Log.Debug("Serialize Module initialized", new
             {
-                types = Provider.DataTypesCount,
                 serializers = Description.Serializers.Count,
                 defaultBytes = Description.DefaultBytesSerializeId,
                 defaultText = Description.DefaultTextSerializerId
@@ -50,28 +50,16 @@ namespace UGF.Module.Serialize.Runtime
 
         public ISerializer<byte[]> GetDefaultBytesSerializer()
         {
-            ISerializer<byte[]> serializer = Provider.Get<byte[]>(Description.DefaultBytesSerializeId);
+            var serializer = Provider.Get<ISerializer<byte[]>>(Description.DefaultBytesSerializeId);
 
             return serializer;
         }
 
         public ISerializer<string> GetDefaultTextSerializer()
         {
-            ISerializer<string> serializer = Provider.Get<string>(Description.DefaultTextSerializerId);
+            var serializer = Provider.Get<ISerializer<string>>(Description.DefaultTextSerializerId);
 
             return serializer;
-        }
-
-        public ISerializerBuilder GetSerializerBuilder(string id)
-        {
-            return TryGetSerializerBuilder(id, out ISerializerBuilder builder) ? builder : throw new ArgumentException($"Serializer builder not found by the specified id: '{id}'.");
-        }
-
-        public bool TryGetSerializerBuilder(string id, out ISerializerBuilder builder)
-        {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
-
-            return Description.Serializers.TryGetValue(id, out builder);
         }
     }
 }
