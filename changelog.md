@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0-preview](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/4.0.0-preview) - 2021-03-02  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-serialize/milestone/9?closed=1)  
+    
+
+### Changed
+
+- Rework provider and update application ([#32](https://github.com/unity-game-framework/ugf-module-serialize/pull/32))  
+    - Update project to _Unity_ of `2021.1` version.
+    - Update package publish registry.
+    - Change dependencies: `com.ugf.application` to `8.0.0-preview.4`.
+    - Replace `ISerializerProvider ` provider by `IProvider<string, ISerializer>` interface from _UGF.RuntimeTools_ package.
+    - Remove `GetSerializerBuilder` and `TryGetSerializerBuilder` methods from `SerializeModule ` class and `ISerializeModule` interface.
+
 ## [3.1.0](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/3.1.0) - 2021-01-16  
 
 ### Release Notes
