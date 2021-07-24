@@ -4,14 +4,14 @@ UGF.Module.Serialize
 
 ## Info
 
-- **Version**: `4.0.0-preview`
+- **Version**: `4.0.0-preview.1`
 - **Unity**: `2021.1`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
-- `com.ugf.application`: `8.0.0-preview.4`
-- `com.ugf.serialize`: `4.0.0`
+- `com.ugf.application`: `8.0.0-preview.8`
+- `com.ugf.serialize`: `5.0.0-preview`
 
 
 ### Description
