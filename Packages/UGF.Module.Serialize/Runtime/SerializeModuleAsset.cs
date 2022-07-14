@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UGF.Application.Runtime;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
-using UGF.EditorTools.Runtime.IMGUI.Attributes;
+using UGF.EditorTools.Runtime.Assets;
+using UGF.EditorTools.Runtime.Ids;
 using UGF.Serialize.Runtime;
 using UnityEngine;
 
@@ -11,15 +10,15 @@ namespace UGF.Module.Serialize.Runtime
     [CreateAssetMenu(menuName = "Unity Game Framework/Serialize/Serialize Module", order = 2000)]
     public class SerializeModuleAsset : ApplicationModuleAsset<ISerializeModule, SerializeModuleDescription>
     {
-        [AssetGuid(typeof(SerializerAsset))]
-        [SerializeField] private string m_defaultBytes;
-        [AssetGuid(typeof(SerializerAsset))]
-        [SerializeField] private string m_defaultText;
-        [SerializeField] private List<AssetReference<SerializerAsset>> m_serializers = new List<AssetReference<SerializerAsset>>();
+        [AssetId(typeof(SerializerAsset))]
+        [SerializeField] private GlobalId m_defaultBytes;
+        [AssetId(typeof(SerializerAsset))]
+        [SerializeField] private GlobalId m_defaultText;
+        [SerializeField] private List<AssetIdReference<SerializerAsset>> m_serializers = new List<AssetIdReference<SerializerAsset>>();
 
-        public string DefaultBytes { get { return m_defaultBytes; } set { m_defaultBytes = value; } }
-        public string DefaultText { get { return m_defaultText; } set { m_defaultText = value; } }
-        public List<AssetReference<SerializerAsset>> Serializers { get { return m_serializers; } }
+        public GlobalId DefaultBytes { get { return m_defaultBytes; } set { m_defaultBytes = value; } }
+        public GlobalId DefaultText { get { return m_defaultText; } set { m_defaultText = value; } }
+        public List<AssetIdReference<SerializerAsset>> Serializers { get { return m_serializers; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -32,7 +31,7 @@ namespace UGF.Module.Serialize.Runtime
 
             for (int i = 0; i < m_serializers.Count; i++)
             {
-                AssetReference<SerializerAsset> reference = m_serializers[i];
+                AssetIdReference<SerializerAsset> reference = m_serializers[i];
 
                 description.Serializers.Add(reference.Guid, reference.Asset);
             }

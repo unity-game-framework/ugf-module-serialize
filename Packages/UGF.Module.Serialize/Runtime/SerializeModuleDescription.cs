@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UGF.Application.Runtime;
+using UGF.EditorTools.Runtime.Ids;
 using UGF.Serialize.Runtime;
 
 namespace UGF.Module.Serialize.Runtime
 {
     public class SerializeModuleDescription : ApplicationModuleDescription, ISerializeModuleDescription
     {
-        public string DefaultBytesSerializeId { get; set; }
-        public string DefaultTextSerializerId { get; set; }
-        public Dictionary<string, ISerializerBuilder> Serializers { get; } = new Dictionary<string, ISerializerBuilder>();
+        public GlobalId DefaultBytesSerializeId { get; set; }
+        public GlobalId DefaultTextSerializerId { get; set; }
+        public Dictionary<GlobalId, ISerializerBuilder> Serializers { get; } = new Dictionary<GlobalId, ISerializerBuilder>();
 
-        IReadOnlyDictionary<string, ISerializerBuilder> ISerializeModuleDescription.Serializers { get { return Serializers; } }
+        IReadOnlyDictionary<GlobalId, ISerializerBuilder> ISerializeModuleDescription.Serializers { get { return Serializers; } }
     }
 }
