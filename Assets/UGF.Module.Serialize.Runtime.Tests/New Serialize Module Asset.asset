@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: New Serialize Module Asset
   m_EditorClassIdentifier: 
   m_defaultBytes:
-    m_first: 6117119291851274510
-    m_second: 2912957103066029402
+    serializedVersion: 2
+    Hash: 0ef97b07965fe4545a9d333e0de76c28
   m_defaultText:
-    m_first: 59856689635569006
-    m_second: 469620057222572746
+    serializedVersion: 2
+    Hash: 6ead289357a7d400ca6a2632f46c8406
   m_serializers:
   - m_guid:
-      m_first: 59856689635569006
-      m_second: 469620057222572746
+      serializedVersion: 2
+      Hash: 6ead289357a7d400ca6a2632f46c8406
     m_asset: {fileID: 11400000, guid: 9328ad6ea75700d4ca6a2632f46c8406, type: 2}
   - m_guid:
-      m_first: 10760418724246781039
-      m_second: 4718998462851677737
+      serializedVersion: 2
+      Hash: 6ffc308dd1af5495297ee38119407d41
     m_asset: {fileID: 11400000, guid: 8d30fc6fafd19554297ee38119407d41, type: 2}
