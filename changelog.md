@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0-preview](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/6.0.0-preview) - 2024-08-13  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-serialize/milestone/14?closed=1)  
+    
+
+### Changed
+
+- Update package ([#41](https://github.com/unity-game-framework/ugf-module-serialize/issues/41))  
+    - Update dependencies: `com.ugf.application` to `9.0.0-preview` version.
+    - Update package _Unity_ version to `2023.2`.
+    - Update package registry to _UPM Hub_,
+    - Change `SerializeModule` and related classes to work with update _Application_.
+
 ## [5.0.0](https://github.com/unity-game-framework/ugf-module-serialize/releases/tag/5.0.0) - 2023-01-04  
 
 ### Release Notes
