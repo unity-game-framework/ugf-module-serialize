@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Serialize.Runtime;
@@ -7,10 +8,18 @@ namespace UGF.Module.Serialize.Runtime
 {
     public class SerializeModuleDescription : ApplicationModuleDescription, ISerializeModuleDescription
     {
-        public GlobalId DefaultBytesSerializeId { get; set; }
-        public GlobalId DefaultTextSerializerId { get; set; }
-        public Dictionary<GlobalId, ISerializerBuilder> Serializers { get; } = new Dictionary<GlobalId, ISerializerBuilder>();
+        public GlobalId DefaultBytesSerializeId { get; }
+        public GlobalId DefaultTextSerializerId { get; }
+        public IReadOnlyDictionary<GlobalId, ISerializerBuilder> Serializers { get; }
 
-        IReadOnlyDictionary<GlobalId, ISerializerBuilder> ISerializeModuleDescription.Serializers { get { return Serializers; } }
+        public SerializeModuleDescription(
+            GlobalId defaultBytesSerializeId,
+            GlobalId defaultTextSerializerId,
+            IReadOnlyDictionary<GlobalId, ISerializerBuilder> serializers)
+        {
+            DefaultBytesSerializeId = defaultBytesSerializeId;
+            DefaultTextSerializerId = defaultTextSerializerId;
+            Serializers = serializers ?? throw new ArgumentNullException(nameof(serializers));
+        }
     }
 }

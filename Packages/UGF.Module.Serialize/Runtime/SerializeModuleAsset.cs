@@ -11,32 +11,27 @@ namespace UGF.Module.Serialize.Runtime
     public class SerializeModuleAsset : ApplicationModuleAsset<ISerializeModule, SerializeModuleDescription>
     {
         [AssetId(typeof(SerializerAsset))]
-        [SerializeField] private GlobalId m_defaultBytes;
+        [SerializeField] private Hash128 m_defaultBytes;
         [AssetId(typeof(SerializerAsset))]
-        [SerializeField] private GlobalId m_defaultText;
+        [SerializeField] private Hash128 m_defaultText;
         [SerializeField] private List<AssetIdReference<SerializerAsset>> m_serializers = new List<AssetIdReference<SerializerAsset>>();
 
         public GlobalId DefaultBytes { get { return m_defaultBytes; } set { m_defaultBytes = value; } }
         public GlobalId DefaultText { get { return m_defaultText; } set { m_defaultText = value; } }
         public List<AssetIdReference<SerializerAsset>> Serializers { get { return m_serializers; } }
 
-        protected override IApplicationModuleDescription OnBuildDescription()
+        protected override SerializeModuleDescription OnBuildDescription()
         {
-            var description = new SerializeModuleDescription
-            {
-                RegisterType = typeof(ISerializeModule),
-                DefaultBytesSerializeId = m_defaultBytes,
-                DefaultTextSerializerId = m_defaultText
-            };
+            var serializers = new Dictionary<GlobalId, ISerializerBuilder>();
 
             for (int i = 0; i < m_serializers.Count; i++)
             {
                 AssetIdReference<SerializerAsset> reference = m_serializers[i];
 
-                description.Serializers.Add(reference.Guid, reference.Asset);
+                serializers.Add(reference.Guid, reference.Asset);
             }
 
-            return description;
+            return new SerializeModuleDescription(m_defaultBytes, m_defaultText, serializers);
         }
 
         protected override ISerializeModule OnBuild(SerializeModuleDescription description, IApplication application)

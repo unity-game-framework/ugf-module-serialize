@@ -15,6 +15,8 @@ namespace UGF.Module.Serialize.Runtime
 
         ISerializeModuleDescription ISerializeModule.Description { get { return Description; } }
 
+        private readonly ILog m_logger;
+
         public SerializeModule(SerializeModuleDescription description, IApplication application) : this(description, application, new Provider<GlobalId, ISerializer>(), new Context { application })
         {
         }
@@ -23,6 +25,8 @@ namespace UGF.Module.Serialize.Runtime
         {
             Provider = provider ?? throw new ArgumentNullException(nameof(provider));
             Context = context ?? throw new ArgumentNullException(nameof(context));
+
+            m_logger = Log.CreateWithLabel<SerializeModule>();
         }
 
         protected override void OnInitialize()
@@ -36,7 +40,7 @@ namespace UGF.Module.Serialize.Runtime
                 Provider.Add(key, serializer);
             }
 
-            Log.Debug("Serialize Module initialized", new
+            m_logger.Debug("Serialize Module initialized", new
             {
                 serializers = Description.Serializers.Count,
                 defaultBytes = Description.DefaultBytesSerializeId,
